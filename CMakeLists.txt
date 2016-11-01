@@ -15,7 +15,6 @@ externalproject_add(
 )
 externalproject_get_property(openfst source_dir)
 set(OPENFST_INCLUDE_DIR ${source_dir}/include CACHE STRING "OPENFST_INCLUDE_DIR" FORCE)
-set(OPENFST_LIBRARY ${source_dir}/lib/cygwin64/libfst.a CACHE STRING "OPENFST_LIBRARY" FORCE)
 
 # Artifact output locations
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
@@ -34,9 +33,6 @@ add_definitions(-DHAVE_OPENFST_GE_10400)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 include_directories(${OPENFST_INCLUDE_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/tools/CLAPACK)
-
-# Include libraries
-link_directories(/usr/lib/lapack)
 
 # Declare Projects
 project(kaldi)
@@ -300,5 +296,5 @@ add_library(
 )
 set_target_properties(kaldi PROPERTIES PREFIX "")
 
-# Declare dependencies
+# Declare Dependencies
 add_dependencies(kaldi openfst)
