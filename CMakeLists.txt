@@ -22,7 +22,11 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 
 # Compile flags
-set(CMAKE_CXX_FLAGS "-std=gnu++14 -march=native -O3 -Wa,-mbig-obj -DNDEBUG")
+set(CMAKE_CXX_FLAGS "-std=gnu++14 -march=native -O3 -DNDEBUG")
+
+if(CYGWIN)
+  set(CMAKE_CXX_FLAGS "-std=gnu++14 -march=native -O3 -Wa,-mbig-obj -DNDEBUG")
+endif(CYGWIN)
 
 # Definitions
 add_definitions(-DKALDI_DOUBLEPRECISION=0)
