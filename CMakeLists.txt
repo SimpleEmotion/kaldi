@@ -22,21 +22,31 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 
 # Compile flags
-set(CMAKE_CXX_FLAGS "-std=gnu++14 -march=native -O3 -DNDEBUG")
-
-if(CYGWIN)
+if (CYGWIN)
   set(CMAKE_CXX_FLAGS "-std=gnu++14 -march=native -O3 -Wa,-mbig-obj -DNDEBUG")
-endif(CYGWIN)
+else (CYGWIN)
+  set(CMAKE_CXX_FLAGS "-std=c++14 -march=native -O3 -DNDEBUG")
+endif (CYGWIN)
 
 # Definitions
 add_definitions(-DKALDI_DOUBLEPRECISION=0)
-add_definitions(-DHAVE_CLAPACK)
 add_definitions(-DHAVE_OPENFST_GE_10400)
+if (CYGWIN)
+  add_definitions(-DHAVE_CLAPACK)
+else (CYGWIN)
+  add_definitions(-DHAVE_EXECINFO_H=1)
+  add_definitions(-DHAVE_CXXABI_H)
+  add_definitions(-DHAVE_ATLAS)
+endif (CYGWIN)
 
 # Include headers
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 include_directories(${OPENFST_INCLUDE_DIR})
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/tools/CLAPACK)
+if (CYGWIN)
+  include_directories(${CMAKE_CURRENT_SOURCE_DIR}/tools/CLAPACK)
+else (CYGWIN)
+  include_directories(${CMAKE_CURRENT_SOURCE_DIR}/tools/ATLAS/include)
+endif (CYGWIN)
 
 # Declare Projects
 project(kaldi)
