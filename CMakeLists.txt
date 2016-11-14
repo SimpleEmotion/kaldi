@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.2)
 
+# Declare Projects
+project(kaldi)
+
 include(ExternalProject)
 
 # openfst
@@ -24,32 +27,29 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 # Compile flags
 if (CYGWIN)
   set(CMAKE_CXX_FLAGS "-std=gnu++14 -march=native -O3 -Wa,-mbig-obj -DNDEBUG")
-else (CYGWIN)
+else ()
   set(CMAKE_CXX_FLAGS "-std=c++14 -march=native -O3 -DNDEBUG")
-endif (CYGWIN)
+endif ()
 
 # Definitions
 add_definitions(-DKALDI_DOUBLEPRECISION=0)
 add_definitions(-DHAVE_OPENFST_GE_10400)
 if (CYGWIN)
   add_definitions(-DHAVE_CLAPACK)
-else (CYGWIN)
+else ()
   add_definitions(-DHAVE_EXECINFO_H=1)
   add_definitions(-DHAVE_CXXABI_H)
   add_definitions(-DHAVE_ATLAS)
-endif (CYGWIN)
+endif ()
 
 # Include headers
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 include_directories(${OPENFST_INCLUDE_DIR})
 if (CYGWIN)
   include_directories(${CMAKE_CURRENT_SOURCE_DIR}/tools/CLAPACK)
-else (CYGWIN)
+else ()
   include_directories(${CMAKE_CURRENT_SOURCE_DIR}/tools/ATLAS/include)
-endif (CYGWIN)
-
-# Declare Projects
-project(kaldi)
+endif ()
 
 # Create Libraries
 add_library(
