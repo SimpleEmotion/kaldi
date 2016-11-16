@@ -26,9 +26,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 
 # Compile flags
 if (CYGWIN)
-  set(CMAKE_CXX_FLAGS "-std=gnu++14 -march=native -O3 -Wa,-mbig-obj -DNDEBUG")
+  set(CMAKE_CXX_FLAGS "-std=gnu++14 -march=native -Wno-unused-result -Wno-sign-compare -O3 -DNDEBUG -Wa,-mbig-obj")
 else ()
-  set(CMAKE_CXX_FLAGS "-std=c++14 -march=native -O3 -DNDEBUG")
+  set(CMAKE_CXX_FLAGS "-std=c++14 -march=native -Wno-unused-result -Wno-sign-compare -O3 -DNDEBUG")
 endif ()
 
 # Definitions
